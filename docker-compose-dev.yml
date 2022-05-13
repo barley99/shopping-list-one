@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  postgres-dev:
+    container_name: postgres-dev
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    restart: always
+    ports:
+      - "5432:5432"
+
+  migrate-dev:
+    image: flyway/flyway
+    command: -url=jdbc:postgresql://db-dev:5432/postgres -user=postgres -connectRetries=60 migrate
+    volumes:
+      - ./src/main/resources/db:/flyway/sql
+    depends_on:
+      - postgres-dev
