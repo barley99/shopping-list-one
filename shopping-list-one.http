@@ -1,0 +1,18 @@
+GET http://localhost:8080/items?view=all
+###
+GET http://localhost:8080/items?view=active
+###
+POST http://localhost:8080/items
+content-type: application/json
+
+{
+	"id": 1,
+	"title": "next buy",
+	"done": true
+}
+###
+GET http://localhost:8080/items
+###
+DELETE http://localhost:8080/item/8
+###
+GET http://localhost:8080/item/1
