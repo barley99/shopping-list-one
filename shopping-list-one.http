@@ -16,3 +16,29 @@ GET http://localhost:8080/items
 DELETE http://localhost:8080/item/8
 ###
 GET http://localhost:8080/item/1
+###
+POST http://localhost:8080/items
+content-type: application/json
+
+{
+	"title": "next buy",
+	"done": false,
+}
+###
+POST http://localhost:8080/items
+Idempotency-Key: 2zey3ixpt17ypvtns9bp
+content-type: application/json
+
+{
+	"title": "next buy",
+	"done": false,
+}
+###
+POST http://localhost:8080/items
+Idempotency-Key: 31gm4tljv0nwm70qi54r
+content-type: application/json
+
+{
+	"title": "next buy 2",
+	"done": false,
+}

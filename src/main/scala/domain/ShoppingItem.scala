@@ -3,7 +3,7 @@ import io.circe.generic.semiauto.{deriveDecoder, deriveEncoder}
 import io.circe.{Decoder, Encoder}
 
 final case class ShoppingItem(
-    id: Long,
+    id: Option[Long],
     title: String,
     done: Boolean,
 )

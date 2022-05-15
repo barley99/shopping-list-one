@@ -7,7 +7,7 @@ import doobie.implicits._
 import fs2.Stream
 
 final class DoobieRepository[F[_]: Sync](xa: Transactor[F]) extends Repository[F] {
-  override def create(shoppingItem: ShoppingItem): F[ShoppingItem] =
+  override def create(key: String, shoppingItem: ShoppingItem): F[ShoppingItem] =
     Q.insertItem(shoppingItem).withUniqueGeneratedKeys[ShoppingItem]("id", "title", "done").transact(xa)
 
   override def update(id: Long, shoppingItem: ShoppingItem): F[Option[ShoppingItem]] = {
@@ -32,7 +32,8 @@ final class DoobieRepository[F[_]: Sync](xa: Transactor[F]) extends Repository[F
   object Q {
     def insertItem(shoppingItem: ShoppingItem) =
       sql"""
-        |INSERT INTO ShoppingItems (title) VALUES (${shoppingItem.title})
+        |INSERT INTO ShoppingItems (title, done) 
+        |VALUES (${shoppingItem.title}, ${shoppingItem.done})
         |""".stripMargin.update
 
     def selectItemById(id: Long) =
